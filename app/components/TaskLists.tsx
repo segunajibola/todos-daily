@@ -17,7 +17,6 @@ const TaskList: React.FC = () => {
   useEffect(() => {
     if (typeof window !== "undefined" && window.localStorage) {
       let data = JSON.parse(localStorage.getItem("tasks") || "[]");
-      console.log("data", data);
       if (data.length === 0) {
         data = [
           {
@@ -33,26 +32,8 @@ const TaskList: React.FC = () => {
         ];
       }
       setTaskList(data);
-      console.log("taskList", taskList);
     }
   }, []);
-
-  // useEffect(() => {
-  // if (taskList.length === 0) {
-  //   setTaskList([
-  //     {
-  //       id: uuidv4(),
-  //       title: "Read a book",
-  //       completed: false,
-  //     },
-  //     {
-  //       id: uuidv4(),
-  //       title: "Learn JavaScript",
-  //       completed: false,
-  //     },
-  //   ]);
-  // }
-  // }, [taskList]);
 
   const handleOnAddTask = (newTask: Task) => {
     if (typeof window !== "undefined" && window.localStorage) {
@@ -64,12 +45,12 @@ const TaskList: React.FC = () => {
     }
   };
 
-  const handleCheckbox = (task: Task) => {
-    setTaskList((prevTasks) =>
-      prevTasks.map((t) =>
-        t.id === task.id ? { ...t, completed: !t.completed } : t
-      )
-    );
+  const handleCheckbox = (id: string) => {
+    setTaskList((prevTasks) => {
+      const check = prevTasks.map((t) => t.id === id ? { ...t, completed: !t.completed } : t);
+      localStorage.setItem("tasks", JSON.stringify(check));
+      return check
+    });
   };
 
   const deleteTask = (id: number | string) => {
@@ -135,13 +116,13 @@ const TaskList: React.FC = () => {
                 type="checkbox"
                 checked={task.completed}
                 className="w-4"
-                onChange={() => handleCheckbox(task)}
+                onChange={() => handleCheckbox(task.id)}
               />
               <span
                 style={{
                   textDecoration: task.completed ? "line-through" : "none",
                 }}
-                onClick={() => handleCheckbox(task)}
+                onClick={() => handleCheckbox(task.id)}
                 className="text-xl"
               >
                 {task.title}
