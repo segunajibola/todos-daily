@@ -4,33 +4,61 @@ import React, { useState, useEffect } from "react";
 import Task from "../types";
 import AddTaskForm from "./AddTaskForm";
 import { MdOutlineDeleteForever } from "react-icons/md";
+import { v4 as uuidv4 } from "uuid";
 
-interface TaskListProps {
-  tasks: Task[];
-}
+// interface TaskListProps {
+//   tasks: Task[];
+// }
 
-const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
-  const [taskList, setTaskList] = useState<Task[]>(tasks);
+const TaskList: React.FC = () => {
   const [filter, setFilter] = useState<"all" | "done" | "not done">("all");
+  const [taskList, setTaskList] = useState<Task[]>([]);
 
   useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(taskList));
-  }, [taskList]);
+    if (typeof window !== "undefined" && window.localStorage) {
+      let data = JSON.parse(localStorage.getItem("tasks") || "[]");
+      if (data.length === 0) {
+        data = [
+          {
+            id: uuidv4(),
+            title: "Read a book",
+            completed: false,
+          },
+          {
+            id: uuidv4(),
+            title: "Learn JavaScript",
+            completed: false,
+          },
+        ];
+      }
+      setTaskList(data);
+    }
+  }, []);
 
   const handleOnAddTask = (newTask: Task) => {
-    setTaskList((prevTasks) => [...prevTasks, newTask]);
+    if (typeof window !== "undefined" && window.localStorage) {
+      setTaskList((prevTasks) => {
+        const updatedTasks = [...prevTasks, newTask];
+        localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+        return updatedTasks;
+      });
+    }
   };
 
-  const handleCheckbox = (task: Task) => {
-    setTaskList((prevTasks) =>
-      prevTasks.map((t) =>
-        t.id === task.id ? { ...t, completed: !t.completed } : t
-      )
-    );
+  const handleCheckbox = (id: string) => {
+    setTaskList((prevTasks) => {
+      const check = prevTasks.map((t) => t.id === id ? { ...t, completed: !t.completed } : t);
+      localStorage.setItem("tasks", JSON.stringify(check));
+      return check
+    });
   };
 
   const deleteTask = (id: number | string) => {
-    setTaskList((prevTask) => prevTask.filter((task) => task.id !== id));
+    setTaskList((prevTask) => {
+      const deletedTask = prevTask.filter((task) => task.id !== id);
+      localStorage.setItem("tasks", JSON.stringify(deletedTask));
+      return deletedTask;
+    });
   };
 
   const getFilteredTasks = () => {
@@ -49,19 +77,6 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
       <AddTaskForm onAddTask={handleOnAddTask} />
 
       <h2 className="text-center mb-4 text-2xl">Task List</h2>
-      {/* <label>
-        Show:
-        <select
-          value={filter}
-          onChange={(e) =>
-            setFilter(e.target.value as "all" | "done" | "not done")
-          }
-        >
-          <option value="all">All</option>
-          <option value="done">Completed</option>
-          <option value="not done">Incomplete</option>
-        </select>
-      </label> */}
 
       <div className="flex gap-x-3 m-4 justify-center items-center">
         <span
@@ -96,18 +111,18 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
             key={task.id}
             className="flex justify-between items-center p-3 m-2 bg-gray-300"
           >
-            <li key={task.id} className="flex gap-x-4">
+            <li className="flex gap-x-4">
               <input
                 type="checkbox"
                 checked={task.completed}
                 className="w-4"
-                onChange={() => handleCheckbox(task)}
+                onChange={() => handleCheckbox(task.id)}
               />
               <span
                 style={{
                   textDecoration: task.completed ? "line-through" : "none",
                 }}
-                onClick={() => handleCheckbox(task)}
+                onClick={() => handleCheckbox(task.id)}
                 className="text-xl"
               >
                 {task.title}
