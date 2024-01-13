@@ -129,7 +129,7 @@ const TaskList: React.FC = () => {
                   onChange={(e) => handleEditTask(task.id, e.target.value)}
                   className="p-2 h-11 outline-none"
                 />
-                <MdOutlineDone onClick={() => setEditingTaskId("")} size={20} />
+                <MdOutlineDone onClick={() => setEditingTaskId("")} size={25} />
               </>
             ) : (
               <>
@@ -154,9 +154,9 @@ const TaskList: React.FC = () => {
                   <MdOutlineDeleteForever
                     onClick={() => deleteTask(task.id)}
                     className=""
-                    size={20}
+                    size={25}
                   />
-                  <CiEdit onClick={() => setEditingTaskId(task.id)} size={20} />
+                  <CiEdit onClick={() => setEditingTaskId(task.id)} size={25} />
                 </div>
               </>
             )}
