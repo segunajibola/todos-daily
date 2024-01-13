@@ -6,10 +6,6 @@ import AddTaskForm from "./AddTaskForm";
 import { MdOutlineDeleteForever } from "react-icons/md";
 import { v4 as uuidv4 } from "uuid";
 
-// interface TaskListProps {
-//   tasks: Task[];
-// }
-
 const TaskList: React.FC = () => {
   const [filter, setFilter] = useState<"all" | "done" | "not done">("all");
   const [taskList, setTaskList] = useState<Task[]>([]);
@@ -47,9 +43,9 @@ const TaskList: React.FC = () => {
 
   const handleCheckbox = (id: string) => {
     setTaskList((prevTasks) => {
-      const check = prevTasks.map((t) => t.id === id ? { ...t, completed: !t.completed } : t);
-      localStorage.setItem("tasks", JSON.stringify(check));
-      return check
+      const updateCheckbox = prevTasks.map((t) => t.id === id ? { ...t, completed: !t.completed } : t);
+      localStorage.setItem("tasks", JSON.stringify(updateCheckbox));
+      return updateCheckbox
     });
   };
 
