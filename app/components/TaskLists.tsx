@@ -127,7 +127,7 @@ const TaskList: React.FC = () => {
                   type="text"
                   value={task.title}
                   onChange={(e) => handleEditTask(task.id, e.target.value)}
-                  className="p-2 h-11"
+                  className="p-2 h-11 outline-none"
                 />
                 <MdOutlineDone onClick={() => setEditingTaskId("")} size={20} />
               </>
