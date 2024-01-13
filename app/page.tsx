@@ -6,7 +6,7 @@ import { FaGithub } from "react-icons/fa";
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-y-3 bg-gray-400 h-screen">
+    <div className="flex flex-col gap-y-3 bg-gray-400">
       <header className="flex items-center justify-between p-5">
         <h1 className="text-center text-4xl my-10">Daily Dos</h1>
         <a
