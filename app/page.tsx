@@ -10,7 +10,7 @@ export default function Home() {
       <header className="flex items-center justify-between p-5">
         <h1 className="text-center text-4xl my-10">Daily Dos</h1>
         <a
-          href="https://github.com/segunajibola/daily-do"
+          href="https://github.com/segunajibola/todos-daily/"
           target="_blank"
           rel="noopener noreferrer"
         >
