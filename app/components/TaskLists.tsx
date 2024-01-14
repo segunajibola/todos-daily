@@ -6,11 +6,14 @@ import AddTaskForm from "./AddTaskForm";
 import { MdOutlineDeleteForever, MdOutlineDone } from "react-icons/md";
 import { v4 as uuidv4 } from "uuid";
 import { CiEdit } from "react-icons/ci";
+import { useWindowSize } from "react-use";
+import Confetti from "react-confetti";
 
 const TaskList: React.FC = () => {
   const [filter, setFilter] = useState<"all" | "done" | "not done">("all");
   const [taskList, setTaskList] = useState<Task[]>([]);
   const [editingTaskId, setEditingTaskId] = useState<string>("");
+  const { width, height } = useWindowSize();
 
   useEffect(() => {
     // if (typeof window !== "undefined" && window.localStorage) {
@@ -93,8 +96,14 @@ const TaskList: React.FC = () => {
     }
   };
 
+  const notDoneTask: Task[] = taskList.filter(
+    (task) => task.completed === false
+  );
+
   return (
     <div className="text-center">
+      {notDoneTask.length === 0 && <Confetti width={width} height={height} />}
+
       <AddTaskForm onAddTask={handleOnAddTask} />
 
       <h2 className="text-center mb-4 text-2xl">Task List</h2>
