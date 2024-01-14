@@ -71,6 +71,17 @@ const TaskList: React.FC = () => {
     });
   };
 
+  const handleUnselect = () => {
+    setTaskList((prevTasks) => {
+      const allUnselectedTask = prevTasks.map((task) => ({
+        ...task,
+        completed: false,
+      }));
+      localStorage.setItem("tasks", JSON.stringify(allUnselectedTask));
+      return allUnselectedTask;
+    });
+  };
+
   const getFilteredTasks = () => {
     switch (filter) {
       case "done":
@@ -83,7 +94,7 @@ const TaskList: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="text-center">
       <AddTaskForm onAddTask={handleOnAddTask} />
 
       <h2 className="text-center mb-4 text-2xl">Task List</h2>
@@ -115,7 +126,11 @@ const TaskList: React.FC = () => {
         </span>
       </div>
 
-      <ul className="">
+      <div>
+        <span onClick={handleUnselect}>Unselect all</span>
+      </div>
+
+      <ul className="grid grid-cols-2 gap-2">
         {getFilteredTasks().map((task) => (
           <div
             key={task.id}

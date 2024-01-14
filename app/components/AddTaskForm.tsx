@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Task from "../types";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 interface AddTaskFormProps {
   onAddTask: (task: Task) => void;
@@ -30,11 +30,11 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ onAddTask }) => {
         placeholder="add task"
         value={newTaskTitle}
         onChange={(e) => SetNewTaskTitle(e.target.value)}
-        className="p-3 outline-none"
+        className="p-4 text-2xl outline-none rounded-md"
       />
       <button
         type="submit"
-        className="bg-gray-100 text-black p-3 m-3 rounded-md"
+        className="bg-gray-100 text-2xl text-black p-4  m-3 rounded-md"
       >
         Add
       </button>
