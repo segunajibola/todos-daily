@@ -71,8 +71,6 @@ const TaskList: React.FC = () => {
     checkNotDoneTask(notDone.length);
   }, []);
 
- 
-
   const deleteTask = (id: number | string) => {
     setTaskList((prevTask) => {
       const deletedTask = prevTask.filter((task) => task.id !== id);
@@ -148,9 +146,13 @@ const TaskList: React.FC = () => {
         </span>
       </div>
 
+      {/* if there are tasklist but notdone = 0,  */}
+
       <div>
         <span onClick={handleUnselect}>Unselect all</span>
       </div>
+
+      {getFilteredTasks().length === 0 && <div className="my-10">Empty</div>}
 
       <ul className="grid grid-cols-2 gap-2">
         {getFilteredTasks().map((task) => (
