@@ -48,6 +48,10 @@ const TaskList: React.FC = () => {
     // }
   };
 
+  const checkNotDoneTask = (num: number) => {
+    num === 0 ? setConfetti(true) : setConfetti(false);
+  };
+
   const handleCheckbox = (id: string) => {
     setTaskList((prevTasks) => {
       const updateCheckbox = prevTasks.map((t) =>
@@ -67,9 +71,7 @@ const TaskList: React.FC = () => {
     checkNotDoneTask(notDone.length);
   }, []);
 
-  const checkNotDoneTask = (num: number) => {
-    num === 0 ? setConfetti(true) : setConfetti(false);
-  };
+ 
 
   const deleteTask = (id: number | string) => {
     setTaskList((prevTask) => {
@@ -110,8 +112,6 @@ const TaskList: React.FC = () => {
         return taskList;
     }
   };
-
-  console.log(width);
 
   return (
     <div className="text-center">
