@@ -13,6 +13,8 @@ const TaskList: React.FC = () => {
   const [filter, setFilter] = useState<"all" | "done" | "not done">("all");
   const [taskList, setTaskList] = useState<Task[]>([]);
   const [editingTaskId, setEditingTaskId] = useState<string>("");
+  const [notDoneTask, setnotDoneTask] = useState<Task[]>([]);
+  const [confetti, setConfetti] = useState<boolean>(false);
   const { width, height } = useWindowSize();
 
   useEffect(() => {
@@ -52,8 +54,21 @@ const TaskList: React.FC = () => {
         t.id === id ? { ...t, completed: !t.completed } : t
       );
       localStorage.setItem("tasks", JSON.stringify(updateCheckbox));
+      let data: Task[] = JSON.parse(localStorage.getItem("tasks") || "[]");
+      const notDoneCheckBox = data.filter((task) => task.completed === false);
+      checkNotDoneTask(notDoneCheckBox.length);
       return updateCheckbox;
     });
+  };
+
+  useEffect(() => {
+    let data: Task[] = JSON.parse(localStorage.getItem("tasks") || "[]");
+    const notDone = data.filter((task) => task.completed === false);
+    checkNotDoneTask(notDone.length);
+  }, []);
+
+  const checkNotDoneTask = (num: number) => {
+    num === 0 ? setConfetti(true) : setConfetti(false);
   };
 
   const deleteTask = (id: number | string) => {
@@ -96,13 +111,11 @@ const TaskList: React.FC = () => {
     }
   };
 
-  const notDoneTask: Task[] = taskList.filter(
-    (task) => task.completed === false
-  );
+  console.log(width);
 
   return (
     <div className="text-center">
-      {notDoneTask.length === 0 && <Confetti width={width} height={height} />}
+      {confetti && <Confetti width={width} height={height} />}
 
       <AddTaskForm onAddTask={handleOnAddTask} />
 
