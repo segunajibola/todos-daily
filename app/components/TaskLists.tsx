@@ -160,65 +160,68 @@ const TaskList: React.FC = () => {
           <div>
             <span onClick={handleUnselect}>Unselect all</span>
           </div>
-          {getFilteredTasks().length === 0 && (
+          {getFilteredTasks().length === 0 ? (
             <div className="my-10">Empty</div>
-          )}
-          <ul className="grid grid-cols-2 gap-2">
-            {getFilteredTasks().map((task) => (
-              <div
-                key={task.id}
-                className="flex justify-between items-center p-2.5 m-1.5 bg-gray-300"
-              >
-                {editingTaskId === task.id ? (
-                  <>
-                    <input
-                      type="text"
-                      value={task.title}
-                      onChange={(e) => handleEditTask(task.id, e.target.value)}
-                      className="p-2 h-11 outline-none"
-                    />
-                    <MdOutlineDone
-                      onClick={() => setEditingTaskId("")}
-                      size={25}
-                    />
-                  </>
-                ) : (
-                  <>
-                    <li className="flex gap-x-4 p-2">
+          ) : (
+            <ul className="grid grid-cols-2 gap-2">
+              {getFilteredTasks().map((task) => (
+                <div
+                  key={task.id}
+                  className="flex justify-between items-center p-2.5 m-1.5 bg-gray-300"
+                >
+                  {editingTaskId === task.id ? (
+                    <>
                       <input
-                        type="checkbox"
-                        checked={task.completed}
-                        className="w-4"
-                        onChange={() => handleCheckbox(task.id)}
+                        type="text"
+                        value={task.title}
+                        onChange={(e) =>
+                          handleEditTask(task.id, e.target.value)
+                        }
+                        className="p-2 h-11 outline-none"
                       />
-                      <span
-                        style={{
-                          textDecoration: task.completed
-                            ? "line-through"
-                            : "none",
-                        }}
-                        onClick={() => handleCheckbox(task.id)}
-                        className="text-xl"
-                      >
-                        {task.title}
-                      </span>
-                    </li>
-                    <div className="flex gap-x-2">
-                      <MdOutlineDeleteForever
-                        onClick={() => deleteTask(task.id)}
-                        className=""
+                      <MdOutlineDone
+                        onClick={() => setEditingTaskId("")}
                         size={25}
                       />
-                      <CiEdit
-                        onClick={() => setEditingTaskId(task.id)}
-                        size={25}
-                      />
-                    </div>
-                  </>
-                )}
-              </div>
-            ))}
-          </ul>
+                    </>
+                  ) : (
+                    <>
+                      <li className="flex gap-x-2 p-1">
+                        <input
+                          type="checkbox"
+                          checked={task.completed}
+                          className="w-4"
+                          onChange={() => handleCheckbox(task.id)}
+                        />
+                        <span
+                          style={{
+                            textDecoration: task.completed
+                              ? "line-through"
+                              : "none",
+                          }}
+                          onClick={() => handleCheckbox(task.id)}
+                          className="text-xl"
+                        >
+                          {task.title}
+                        </span>
+                      </li>
+                      <div className="flex flex-col gap-y-1">
+                        <MdOutlineDeleteForever
+                          onClick={() => deleteTask(task.id)}
+                          className=""
+                          size={25}
+                        />
+                        <CiEdit
+                          onClick={() => setEditingTaskId(task.id)}
+                          size={25}
+                        />
+                      </div>
+                    </>
+                  )}
+                </div>
+              ))}
+            </ul>
+          )}
         </>
       )}
     </div>
