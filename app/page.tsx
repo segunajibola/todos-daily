@@ -17,7 +17,7 @@ export default function Home() {
           <FaGithub size={25} className="flex items-center" />
         </a>
       </header>
-      <div className="flex justify-center">
+      <div className="w-[90%] mx-auto">
         <TaskList />
       </div>
     </div>

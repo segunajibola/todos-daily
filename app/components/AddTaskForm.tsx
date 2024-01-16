@@ -24,13 +24,13 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ onAddTask }) => {
     }
   };
   return (
-    <form onSubmit={handleSubmit} className="w-[90vw] mx-auto">
+    <form onSubmit={handleSubmit} className="w-[80vw] mx-auto">
       <input
         type="text"
         placeholder="add task"
         value={newTaskTitle}
         onChange={(e) => SetNewTaskTitle(e.target.value)}
-        className="p-4 text-2xl outline-none rounded-md"
+        className="p-3 text-2xl outline-none w-full mx-auto rounded-md"
       />
       <button
         type="submit"
