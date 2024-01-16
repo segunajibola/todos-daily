@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 import { CiEdit } from "react-icons/ci";
 import { useWindowSize } from "react-use";
 import Confetti from "react-confetti";
-import { Oval } from "react-loader-spinner";
+import Loading from "./Loading";
 
 const TaskList: React.FC = () => {
   const [filter, setFilter] = useState<"all" | "done" | "not done">("all");
@@ -154,20 +154,7 @@ const TaskList: React.FC = () => {
       {/* if there are tasklist but notdone = 0,  */}
 
       {loading ? (
-        <div className="flex flex-col gap-5 justify-center items-center">
-          <p className="my-10">Loading... please wait.</p>
-          <div>
-            <Oval
-              visible={true}
-              height="100"
-              width="100"
-              color="gray"
-              ariaLabel="oval-loading"
-              wrapperStyle={{}}
-              wrapperClass="text-white h-[100px] w-[100px]"
-            />
-          </div>
-        </div>
+        <Loading />
       ) : (
         <>
           <div>
