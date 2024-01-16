@@ -163,7 +163,7 @@ const TaskList: React.FC = () => {
           {getFilteredTasks().length === 0 ? (
             <div className="my-10">Empty</div>
           ) : (
-            <ul className="grid grid-cols-2 gap-2 bg-red-500">
+            <ul className="grid grid-cols-2 gap-2">
               {getFilteredTasks().map((task) => (
                 <div
                   key={task.id}
