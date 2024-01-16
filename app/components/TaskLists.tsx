@@ -126,7 +126,7 @@ const TaskList: React.FC = () => {
           } px-1.5 py-1 rounded-lg cursor-pointer`}
           onClick={() => setFilter("all")}
         >
-          All
+          All {filter === "all" && getFilteredTasks().length}
         </span>
         <span
           className={`${
@@ -134,7 +134,7 @@ const TaskList: React.FC = () => {
           } px-1.5 py-1 rounded-lg cursor-pointer`}
           onClick={() => setFilter("not done")}
         >
-          Not done
+          Not done {taskList.filter((task) => task.completed === false).length}
         </span>
         <span
           className={`${
@@ -142,7 +142,7 @@ const TaskList: React.FC = () => {
           } px-1.5 py-1 rounded-lg cursor-pointer`}
           onClick={() => setFilter("done")}
         >
-          Done
+          Done {taskList.filter((task) => task.completed === true).length}
         </span>
       </div>
 
