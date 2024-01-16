@@ -186,7 +186,7 @@ const TaskList: React.FC = () => {
                     </>
                   ) : (
                     <>
-                      <li className="flex gap-x-2 p-1">
+                      <li className="flex gap-x-1 p-1">
                         <input
                           type="checkbox"
                           checked={task.completed}
@@ -200,7 +200,7 @@ const TaskList: React.FC = () => {
                               : "none",
                           }}
                           onClick={() => handleCheckbox(task.id)}
-                          className="text-xl"
+                          className="text-lg"
                         >
                           {task.title}
                         </span>
