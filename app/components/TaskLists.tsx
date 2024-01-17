@@ -20,23 +20,39 @@ const TaskList: React.FC = () => {
 
   useEffect(() => {
     // if (typeof window !== "undefined" && window.localStorage) {
-    let data = JSON.parse(localStorage.getItem("tasks") || "[]");
-    if (data.length === 0) {
-      data = [
-        {
-          id: uuidv4(),
-          title: "Read a book",
-          completed: false,
-        },
-        {
-          id: uuidv4(),
-          title: "Learn JavaScript",
-          completed: false,
-        },
-      ];
-    }
-    setTaskList(data);
-    // }
+    let isMounted = true;
+
+    const fetchData = async () => {
+      let data: Task[] = JSON.parse(localStorage.getItem("tasks") || "[]");
+      if (data.length === 0) {
+        data = [
+          {
+            id: uuidv4(),
+            title: "Read a book",
+            completed: false,
+          },
+          {
+            id: uuidv4(),
+            title: "Learn JavaScript",
+            completed: false,
+          },
+        ];
+        localStorage.setItem("tasks", JSON.stringify(data));
+      }
+      
+      if (isMounted) {
+        setTaskList(data);
+        setLoading(false);
+      }
+      console.log("data1", data);
+
+      if (data.length > 0) {
+        const notDone = data.filter((task) => !task.completed);
+        notDone.length === 0 && setConfetti(true);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const handleOnAddTask = (newTask: Task) => {
@@ -48,12 +64,12 @@ const TaskList: React.FC = () => {
     });
     // }
     let data: Task[] = JSON.parse(localStorage.getItem("tasks") || "[]");
-    const notDoneCheckBox = data.filter((task) => task.completed === false);
-    checkNotDoneTask(notDoneCheckBox.length);
+    const notDoneTask = data.filter((task) => task.completed === false);
+    checkNotDoneTask(notDoneTask.length);
   };
 
   const checkNotDoneTask = (num: number) => {
-    num === 0 ? setConfetti(true) : setConfetti(false);
+    taskList.length > 0 && num === 0 ? setConfetti(true) : setConfetti(false);
   };
 
   const handleCheckbox = (id: string) => {
@@ -63,21 +79,34 @@ const TaskList: React.FC = () => {
       );
       localStorage.setItem("tasks", JSON.stringify(updateCheckbox));
       let data: Task[] = JSON.parse(localStorage.getItem("tasks") || "[]");
-      const notDoneCheckBox = data.filter((task) => task.completed === false);
-      checkNotDoneTask(notDoneCheckBox.length);
+      const notDoneTask = data.filter((task) => task.completed === false);
+      checkNotDoneTask(notDoneTask.length);
       return updateCheckbox;
     });
   };
 
   useEffect(() => {
-    let data: Task[] = JSON.parse(localStorage.getItem("tasks") || "[]");
-    setTimeout(() => {
-      // setLocalStorageData(data);
-      setLoading(false);
-    }, 2000);
-    const notDone = data.filter((task) => task.completed === false);
-    checkNotDoneTask(notDone.length);
+    // let data: Task[] = JSON.parse(localStorage.getItem("tasks") || "[]");
+    // setTimeout(() => {
+    //   setLoading(false);
+    //   if (taskList.length > 0) {
+    //     const notDone = taskList.filter((task) => task.completed === false);
+    //     notDone.length === 0 ? setConfetti(true) : null;
+    //   }
+    // }, 1500);
+    // let notDone: false | Task[] = [];
+    // setTimeout(() => {
+    //   if (taskList.length > 0) {
+    //     const notDone = taskList.filter((task) => task.completed === false);
+    //     notDone.length === 0 && setConfetti(true);
+    //   }
+    // }, 3000);
+    // setTimeout((notDone: false | Task[]) => {
+    //   checkNotDoneTask(notDone?.length > 0 && notDone.length);
+    // }, 3000);
   }, []);
+
+  console.log("taskList outside", taskList);
 
   const deleteTask = (id: number | string) => {
     setTaskList((prevTask) => {
@@ -164,7 +193,15 @@ const TaskList: React.FC = () => {
             <span onClick={handleUnselect}>Unselect all</span>
           </div>
           {getFilteredTasks().length === 0 ? (
-            <div className="my-10">{filter === "done" ? "Why haven't you done all your tasks?" : filter === "not done" ? "You have done all your task" : filter === "all" ? "You don't have any task. Add task above." : ""}</div>
+            <div className="my-10">
+              {filter === "done"
+                ? "Why haven't you done any tasks?"
+                : filter === "not done"
+                ? "Yay 🎉🎊 Weldone!!, you have done all your tasks"
+                : filter === "all"
+                ? "You don't have any task to do. Add new task above."
+                : ""}
+            </div>
           ) : (
             <ul className="grid grid-cols-2 gap-2">
               {getFilteredTasks().map((task) => (
