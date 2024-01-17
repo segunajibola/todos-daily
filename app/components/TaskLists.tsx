@@ -47,6 +47,9 @@ const TaskList: React.FC = () => {
       return updatedTasks;
     });
     // }
+    let data: Task[] = JSON.parse(localStorage.getItem("tasks") || "[]");
+    const notDoneCheckBox = data.filter((task) => task.completed === false);
+    checkNotDoneTask(notDoneCheckBox.length);
   };
 
   const checkNotDoneTask = (num: number) => {
@@ -161,7 +164,7 @@ const TaskList: React.FC = () => {
             <span onClick={handleUnselect}>Unselect all</span>
           </div>
           {getFilteredTasks().length === 0 ? (
-            <div className="my-10">Empty</div>
+            <div className="my-10">{filter === "done" ? "Why haven't you done all your tasks?" : filter === "not done" ? "You have done all your task" : filter === "all" ? "You don't have any task. Add task above." : ""}</div>
           ) : (
             <ul className="grid grid-cols-2 gap-2">
               {getFilteredTasks().map((task) => (
