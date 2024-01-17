@@ -39,7 +39,7 @@ const TaskList: React.FC = () => {
         ];
         localStorage.setItem("tasks", JSON.stringify(data));
       }
-      
+
       if (isMounted) {
         setTaskList(data);
         setLoading(false);
@@ -84,29 +84,6 @@ const TaskList: React.FC = () => {
       return updateCheckbox;
     });
   };
-
-  useEffect(() => {
-    // let data: Task[] = JSON.parse(localStorage.getItem("tasks") || "[]");
-    // setTimeout(() => {
-    //   setLoading(false);
-    //   if (taskList.length > 0) {
-    //     const notDone = taskList.filter((task) => task.completed === false);
-    //     notDone.length === 0 ? setConfetti(true) : null;
-    //   }
-    // }, 1500);
-    // let notDone: false | Task[] = [];
-    // setTimeout(() => {
-    //   if (taskList.length > 0) {
-    //     const notDone = taskList.filter((task) => task.completed === false);
-    //     notDone.length === 0 && setConfetti(true);
-    //   }
-    // }, 3000);
-    // setTimeout((notDone: false | Task[]) => {
-    //   checkNotDoneTask(notDone?.length > 0 && notDone.length);
-    // }, 3000);
-  }, []);
-
-  console.log("taskList outside", taskList);
 
   const deleteTask = (id: number | string) => {
     setTaskList((prevTask) => {
