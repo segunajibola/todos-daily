@@ -177,7 +177,7 @@ const TaskList: React.FC = () => {
                         onChange={(e) =>
                           handleEditTask(task.id, e.target.value)
                         }
-                        className="p-2 h-11 outline-none"
+                        className="p-2 h-11 w-[80%] outline-none"
                       />
                       <MdOutlineDone
                         onClick={() => setEditingTaskId("")}
@@ -200,7 +200,7 @@ const TaskList: React.FC = () => {
                               : "none",
                           }}
                           onClick={() => handleCheckbox(task.id)}
-                          className="text-lg"
+                          className="text-lg text-left"
                         >
                           {task.title}
                         </span>
