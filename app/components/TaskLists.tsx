@@ -180,7 +180,7 @@ const TaskList: React.FC = () => {
                 : ""}
             </div>
           ) : (
-            <ul className="grid grid-cols-2 gap-2">
+            <ul className="grid grid-cols-2 gap-2 py-14">
               {getFilteredTasks().map((task) => (
                 <div
                   key={task.id}

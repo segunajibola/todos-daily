@@ -24,7 +24,10 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ onAddTask }) => {
     }
   };
   return (
-    <form onSubmit={handleSubmit} className="w-[80vw] mx-auto">
+    <form
+      onSubmit={handleSubmit}
+      className="w-[75%] flex gap-2 items-center mx-auto"
+    >
       <input
         type="text"
         placeholder="add task"
@@ -34,7 +37,7 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ onAddTask }) => {
       />
       <button
         type="submit"
-        className="bg-gray-700 text-white text-2xl p-3 m-4 mx-auto w-[95%] rounded-md"
+        className="bg-gray-700 text-white text-2xl p-3 m-4 mx-auto w-[25%] rounded-md"
       >
         Add
       </button>
