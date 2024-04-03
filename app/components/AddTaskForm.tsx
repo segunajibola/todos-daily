@@ -24,7 +24,7 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ onAddTask }) => {
     }
   };
   return (
-    <form onSubmit={handleSubmit} className="w-[80vw] mx-auto">
+    <form onSubmit={handleSubmit} className="w-[80vw] flex mx-auto">
       <input
         type="text"
         placeholder="add task"
